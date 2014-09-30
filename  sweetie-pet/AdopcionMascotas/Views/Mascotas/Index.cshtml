@@ -16,7 +16,7 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Raza)
+            @Html.ActionLink("Raza", "Index", new { ordena = ViewBag.Raza })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Color)
