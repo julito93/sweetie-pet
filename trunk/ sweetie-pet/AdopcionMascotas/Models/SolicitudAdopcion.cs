@@ -15,10 +15,8 @@ namespace AdopcionMascotas.Models
         public virtual PadreAdoptivo PadreAdoptivo {get; set;}
         public virtual ICollection<Mascota> Mascotas { get; set; }
 
-        public SolicitudAdopcion(PadreAdoptivo PadreAdoptivo)
+        public SolicitudAdopcion()
         {
-            this.PadreAdoptivo = PadreAdoptivo;
-            PadreAdoptivo_Cedula = PadreAdoptivo.Cedula;
             this.Mascotas = new HashSet<Mascota>();
         }
         
