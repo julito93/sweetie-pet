@@ -25,7 +25,7 @@ namespace AdopcionMascotas.Models
 
         [Required(ErrorMessage = "¿Cuál es su tamaño?")]
         [Display(Name = "Tamaño :")]
-        [MaxLength(5)]
+        [MaxLength(10)]
         public string Tamaño { get; set; }
 
         [Required(ErrorMessage = "¿Es hembra o macho?")]
@@ -34,7 +34,7 @@ namespace AdopcionMascotas.Models
         public string Sexo { get; set; }
 
         [Display(Name = "Su historia :")]
-        [MaxLength(20)]
+        [MaxLength(25)]
         public string Historia { get; set; }
         
         [Required(ErrorMessage = "¿Cuál es su edad?")]
