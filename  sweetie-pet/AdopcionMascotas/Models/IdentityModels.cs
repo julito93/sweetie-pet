@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
 namespace AdopcionMascotas.Models
 {
@@ -15,6 +16,8 @@ namespace AdopcionMascotas.Models
             // Agregar reclamaciones de usuario personalizado aquí
             return userIdentity;
         }
+
+        public DateTime Fecha_Nac { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
