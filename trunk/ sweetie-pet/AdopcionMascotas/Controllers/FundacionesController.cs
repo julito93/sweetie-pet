@@ -15,18 +15,29 @@ namespace AdopcionMascotas.Controllers
         private Contexto db = new Contexto();
 
         // GET: Fundaciones
-        public ActionResult Index(Int32? id, Int32 ? MascotaID)
+        public ActionResult Index(String ciudad, String nombre, Int32? id, Int32? MascotaID)
         {
-
+            ViewBag.ciudades = new SelectList(db.Fundaciones.OrderBy(f=>f.Ciudad).Select(f => f.Ciudad).Distinct());
             var modelo = new FundacionMascotaFoto();
-            modelo.Fundaciones = db.Fundaciones.OrderBy(f => f.Nombre);
-
-            if(id != null)
+            if (!String.IsNullOrEmpty(ciudad) && !String.IsNullOrEmpty(nombre))
+            {
+                modelo.Fundaciones = db.Fundaciones.Where(f => f.Ciudad.Equals(ciudad)).Where(f => f.Nombre.Equals(nombre));
+            }
+            else if(!String.IsNullOrEmpty(ciudad))
+            {
+                modelo.Fundaciones = db.Fundaciones.Where(f => f.Ciudad.Equals(ciudad)).Distinct().OrderBy(f => f.Nombre);
+            }
+            else if (!String.IsNullOrEmpty(nombre))
+                modelo.Fundaciones = db.Fundaciones.Where(f => f.Nombre.Equals(nombre)).OrderBy(f => f.Nombre);
+            else
+                modelo.Fundaciones = db.Fundaciones.OrderBy(f => f.Nombre);
+            
+            if (id != null)
             {
                 ViewBag.FundacionID = id;
                 modelo.Mascotas = modelo.Fundaciones.Where(f => f.ID == id.Value).Single().Mascotas;
             }
-            if(MascotaID != null)
+            if (MascotaID != null)
             {
                 ViewBag.MascotaID = MascotaID;
                 modelo.Fotos = modelo.Mascotas.Where(m => m.ID == MascotaID).Single().Fotos;

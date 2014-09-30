@@ -11,7 +11,7 @@ namespace AdopcionMascotas.App_Start
         public static void cargar (Contexto ctx)
         {
 
-
+            
             var fotos = new List<Foto>
             {
                 new Foto{ ID = 1, Url="mascota1"},
@@ -30,7 +30,7 @@ namespace AdopcionMascotas.App_Start
             {
                 new Fundación{ Nombre = "Paraiso de la mascota", Dirección = "cll 122", Barrio = "Pance", Correo = "correo@hotmail.com", Ciudad = "Cali", Telefono = "2321", Contraseña = "fff"},
                 new Fundación{ Nombre = "pets", Dirección = "carrera 50", Barrio = "Republica", Correo = "correo32@hotmail.com", Ciudad = "Cali", Telefono = "234421", Contraseña = "ddd"},
-                new Fundación{ Nombre = "Animalia", Dirección = "cll 32", Barrio = "Morichal", Correo = "correo32@hotmail.com", Ciudad = "Cali", Telefono = "24", Contraseña = "rrr"},
+                new Fundación{ Nombre = "Animalia", Dirección = "cll 32", Barrio = "Morichal", Correo = "correo32@hotmail.com", Ciudad = "Bogotá", Telefono = "24", Contraseña = "rrr"},
 
             };
 
