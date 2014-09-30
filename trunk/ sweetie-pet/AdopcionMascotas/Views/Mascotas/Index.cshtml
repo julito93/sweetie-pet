@@ -1,5 +1,5 @@
-﻿@model IEnumerable<AdopcionMascotas.Models.Mascota>
-
+﻿@model PagedList.IPagedList<AdopcionMascotas.Models.Mascota>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,28 +13,28 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Raza)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Raza)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Color)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Color)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tamaño)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Tamaño)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Sexo)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Sexo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Historia)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Historia)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Edad)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Edad)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tipo)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Tipo)
         </th>
         <th></th>
     </tr>
@@ -72,5 +72,6 @@
         </td>
     </tr>
 }
-
 </table>
+Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount 
+@Html.PagedListPager(Model, pag => Url.Action("Index", new { pag, ordena = ViewBag.OrdenaActual, filtro = ViewBag.Filtro }))
