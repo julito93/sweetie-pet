@@ -20,7 +20,7 @@ namespace AdopcionMascotas.Controllers
         {
             int tamañoPag = 3;
             int numPag = (pag ?? 1);
-            return View(db.Mascotas.ToPagedList(numPag, tamañoPag));
+            return View(db.Mascotas.OrderBy(m => m.Nombre).ToPagedList(numPag, tamañoPag));
         }
 
         // GET: Mascotas/Details/5
