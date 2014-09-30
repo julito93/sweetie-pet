@@ -24,7 +24,7 @@ namespace AdopcionMascotas.App_Start
             };
 
             fotos.ForEach(f => ctx.Fotoes.Add(f));
-            //ctx.SaveChanges();
+            ctx.SaveChanges();
 
             var fundaciones = new List<Fundación>
             {
@@ -35,7 +35,7 @@ namespace AdopcionMascotas.App_Start
             };
 
             fundaciones.ForEach(f => ctx.Fundaciones.Add(f));
-            //ctx.SaveChanges();
+            ctx.SaveChanges();
 
             var mascotas = new List<Mascota>
             {
@@ -50,7 +50,7 @@ namespace AdopcionMascotas.App_Start
                 new Mascota {Nombre = "Sacha", Color = "blanco", Edad=9, Historia="Rescatado de la calle", Raza="golden", Sexo="Hembra", Tamaño="grande", Tipo="Perro" },
             };
             mascotas.ForEach(s => ctx.Mascotas.Add(s));
-            //ctx.SaveChanges();
+            ctx.SaveChanges();
 
 
             mascotas[0].Fundación = fundaciones[0];
@@ -58,7 +58,7 @@ namespace AdopcionMascotas.App_Start
             mascotas[2].Fundación = fundaciones[1];
             mascotas[3].Fundación = fundaciones[2];
             mascotas[4].Fundación = fundaciones[2];
-            //ctx.SaveChanges();
+            ctx.SaveChanges();
 
             mascotas[0].Fotos.Add(fotos[0]);
             mascotas[0].Fotos.Add(fotos[1]);
@@ -67,7 +67,7 @@ namespace AdopcionMascotas.App_Start
             mascotas[2].Fotos.Add(fotos[4]);
             mascotas[3].Fotos.Add(fotos[5]);
             mascotas[4].Fotos.Add(fotos[6]);
-            //ctx.SaveChanges();
+            ctx.SaveChanges();
             
 
         }
