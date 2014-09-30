@@ -19,12 +19,12 @@ namespace AdopcionMascotas.Controllers
         public ActionResult Index( string ordena, int? pag )
         {
             ViewBag.Nombre = String.IsNullOrEmpty(ordena) ? "Nombre desc" : "";
-            ViewBag.Raza = String.IsNullOrEmpty(ordena) ? "Raza desc" : "";
-            ViewBag.Color = string.IsNullOrEmpty(ordena) ? "Color desc" : "";
-            ViewBag.Tamaño = string.IsNullOrEmpty(ordena) ? "Tamaño desc" : "";
-            ViewBag.Edad = String.IsNullOrEmpty(ordena) ? "Edad desc" : "";
-            ViewBag.Sexo = string.IsNullOrEmpty(ordena) ? "Sexo desc" : "";
-            ViewBag.Tipo = string.IsNullOrEmpty(ordena) ? "Tipo desc" : "";
+            ViewBag.Raza = ordena == "Raza" ? "Raza desc" : "Raza";
+            ViewBag.Color = ordena == "Color" ? "Color desc" : "Color";
+            ViewBag.Tamaño = ordena == "Tamaño" ? "Tamaño desc" : "Tamaño";
+            ViewBag.Edad = ordena == "Edad" ? "Edad desc" : "Edad";
+            ViewBag.Sexo = ordena == "Sexo" ? "Sexo desc" : "Sexo";
+            ViewBag.Tipo = ordena == "Tipo" ? "Tipo desc" : "Tipo";
             var mascotas = from m in db.Mascotas select m;
 
             switch (ordena) 
@@ -50,7 +50,24 @@ namespace AdopcionMascotas.Controllers
                 case "Sexo desc":
                     mascotas = mascotas.OrderByDescending(m => m.Sexo);
                     break;
-
+                case "Raza":
+                    mascotas = mascotas.OrderBy(m => m.Raza);
+                    break;
+                case "Color":
+                    mascotas = mascotas.OrderBy(m => m.Color);
+                    break;
+                case "Tamaño":
+                    mascotas = mascotas.OrderBy(m => m.Tamaño);
+                    break;
+                case "Edad":
+                    mascotas = mascotas.OrderBy(m => m.Edad);
+                    break;
+                case "Tipo":
+                    mascotas = mascotas.OrderBy(m => m.Tipo);
+                    break;
+                case "Sexo":
+                    mascotas = mascotas.OrderBy(m => m.Sexo);
+                    break;
                 default:
                     mascotas = mascotas.OrderBy(m => m.Nombre); 
                    break; 
