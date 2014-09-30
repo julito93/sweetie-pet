@@ -8,15 +8,26 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+    @using(Html.BeginForm()){
+    
+    <text>
+    Ciudad: @Html.DropDownList("ciudad",(SelectList)ViewBag.ciudades, "Seleecione")<br />
+    Buscar fundacion por nombre: @Html.TextBox("nombre") <br/>
+    <input type ="submit" value= "Buscar"/>
+    </text>
+    }
 </p>
 <table class="table">
     <tr>
         <th>Nombre</th>
+        <th>Telefono</th>
+        <th>direccion</th>
         <th>Ciudad</th>
         <th>Barrio</th>
+        <th>Correo</th>
     </tr>
 
-@foreach (var item in Model.Fundaciones)
+    @foreach (var item in Model.Fundaciones)
 {
         string seleccionada = "";
 
@@ -24,7 +35,7 @@
         {
             seleccionada = "success";
         }
-        <tr class= "@seleccionada">
+        <tr class="@seleccionada">
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
@@ -52,26 +63,26 @@
         </tr>
 }
 
-    </table>
+</table>
 
-    @if(Model.Mascotas != null)
+@if(Model.Mascotas != null)
     {
-        <h3>Mascotas de la fundación seleccionada</h3>
-        <table class = "table">
-            <tr>
-                <th>Nombre</th>
-                <th>Raza</th>
-                <th>Color</th>
-                <th>Tamaño</th>
-                <th>Sexo</th>
-                <th>Edad</th>
-                <th>Tipo</th>
-                <th>Su historia</th>
+    <h3>Mascotas de la fundación seleccionada</h3>
+    <table class="table">
+        <tr>
+            <th>Nombre</th>
+            <th>Raza</th>
+            <th>Color</th>
+            <th>Tamaño</th>
+            <th>Sexo</th>
+            <th>Edad</th>
+            <th>Tipo</th>
+            <th>Su historia</th>
 
-            </tr>
+        </tr>
 
 
-            @foreach (var item in Model.Mascotas)
+        @foreach (var item in Model.Mascotas)
             {
             string seleccionada1= "";
             if(item.ID == ViewBag.MascotaID)
@@ -79,42 +90,42 @@
                 seleccionada1 = "success";
             }
 
-                <tr class="@seleccionada1">
-                    <td>@item.Nombre</td>
-                    <td>@item.Raza</td>
-                    <td>@item.Color</td>
-                    <td>@item.Tamaño</td>
-                    <td>@item.Sexo</td>
-                    <td>@item.Edad</td>
-                    <td>@item.Tipo</td>
-                    <td>@item.Historia</td>
+            <tr class="@seleccionada1">
+                <td>@item.Nombre</td>
+                <td>@item.Raza</td>
+                <td>@item.Color</td>
+                <td>@item.Tamaño</td>
+                <td>@item.Sexo</td>
+                <td>@item.Edad</td>
+                <td>@item.Tipo</td>
+                <td>@item.Historia</td>
 
-                    <td>
-                        @Html.ActionLink("Select", "Index", new { MascotaID = item.ID })
-                    </td>
+                <td>
+                    @Html.ActionLink("Select", "Index", new { MascotaID = item.ID })
+                </td>
 
-                </tr>
+            </tr>
            }
 
-        </table>
+    </table>
     }
 
-    @if(Model.Fotos != null)
+@if(Model.Fotos != null)
 {
-        <h3>Fotos de la mascota seleccionada</h3>
-        <table class="table">
-            <tr>
-                <th>Url</th>
-            </tr>
-            @foreach(var item in Model.Fotos)
+    <h3>Fotos de la mascota seleccionada</h3>
+    <table class="table">
+        <tr>
+            <th>Url</th>
+        </tr>
+        @foreach(var item in Model.Fotos)
         {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Url)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Url)
                 </td>
 
             </tr>
         }
-        </table>
+    </table>
 }
 
