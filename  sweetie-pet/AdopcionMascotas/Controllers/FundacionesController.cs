@@ -15,9 +15,23 @@ namespace AdopcionMascotas.Controllers
         private Contexto db = new Contexto();
 
         // GET: Fundaciones
-        public ActionResult Index()
+        public ActionResult Index(Int32? id, Int32 ? MascotaID)
         {
-            return View(db.Fundaciones.ToList());
+
+            var modelo = new FundacionMascotaFoto();
+            modelo.Fundaciones = db.Fundaciones.OrderBy(f => f.Nombre);
+
+            if(id != null)
+            {
+                ViewBag.FundacionID = id;
+                modelo.Mascotas = modelo.Fundaciones.Where(f => f.ID == id.Value).Single().Mascotas;
+            }
+            if(MascotaID != null)
+            {
+                ViewBag.MascotaID = MascotaID;
+                modelo.Fotos = modelo.Mascotas.Where(m => m.ID == MascotaID).Single().Fotos;
+            }
+            return View(modelo);
         }
 
         // GET: Fundaciones/Details/5

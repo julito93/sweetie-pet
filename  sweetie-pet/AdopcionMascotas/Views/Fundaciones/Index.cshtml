@@ -1,70 +1,120 @@
-﻿@model IEnumerable<AdopcionMascotas.Models.Fundación>
-
+﻿@model AdopcionMascotas.Models.FundacionMascotaFoto
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Fundaciones";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Fundaciones</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dirección)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ciudad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Barrio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Correo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Contraseña)
-        </th>
-        <th></th>
+        <th>Nombre</th>
+        <th>Ciudad</th>
+        <th>Barrio</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefono)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dirección)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ciudad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Barrio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Correo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contraseña)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+@foreach (var item in Model.Fundaciones)
+{
+        string seleccionada = "";
+
+        if(item.ID == ViewBag.FundacionID)
+        {
+            seleccionada = "success";
+        }
+        <tr class= "@seleccionada">
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dirección)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ciudad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barrio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correo)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "Index", new { id=item.ID }) |
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>
+        </tr>
 }
 
-</table>
+    </table>
+
+    @if(Model.Mascotas != null)
+    {
+        <h3>Mascotas de la fundación seleccionada</h3>
+        <table class = "table">
+            <tr>
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Color</th>
+                <th>Tamaño</th>
+                <th>Sexo</th>
+                <th>Edad</th>
+                <th>Tipo</th>
+                <th>Su historia</th>
+
+            </tr>
+
+
+            @foreach (var item in Model.Mascotas)
+            {
+            string seleccionada1= "";
+            if(item.ID == ViewBag.MascotaID)
+            {
+                seleccionada1 = "success";
+            }
+
+                <tr class="@seleccionada1">
+                    <td>@item.Nombre</td>
+                    <td>@item.Raza</td>
+                    <td>@item.Color</td>
+                    <td>@item.Tamaño</td>
+                    <td>@item.Sexo</td>
+                    <td>@item.Edad</td>
+                    <td>@item.Tipo</td>
+                    <td>@item.Historia</td>
+
+                    <td>
+                        @Html.ActionLink("Select", "Index", new { id = item.ID})
+                    </td>
+
+                </tr>
+           }
+
+        </table>
+    }
+
+    @if(Model.Fotos != null)
+{
+        <h3>Fotos de la mascota seleccionada</h3>
+        <table class="table">
+            <tr>
+                <th>Url</th>
+            </tr>
+            @foreach(var item in Model.Fotos)
+        {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Url)
+                </td>
+
+            </tr>
+        }
+        </table>
+}
+
