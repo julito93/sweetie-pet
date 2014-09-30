@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdopcionMascotas.Models;
+using PagedList;
 
 namespace AdopcionMascotas.Controllers
 {
@@ -15,9 +16,11 @@ namespace AdopcionMascotas.Controllers
         private Contexto db = new Contexto();
 
         // GET: Mascotas
-        public ActionResult Index()
+        public ActionResult Index( int? pag )
         {
-            return View(db.Mascotas.ToList());
+            int tamañoPag = 3;
+            int numPag = (pag ?? 1);
+            return View(db.Mascotas.ToPagedList(numPag, tamañoPag));
         }
 
         // GET: Mascotas/Details/5
