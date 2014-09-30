@@ -16,11 +16,25 @@ namespace AdopcionMascotas.Controllers
         private Contexto db = new Contexto();
 
         // GET: Mascotas
-        public ActionResult Index( int? pag )
+        public ActionResult Index( string ordena, int? pag )
         {
+            ViewBag.Raza = String.IsNullOrEmpty(ordena) ? "Raza desc" : "";
+
+            var mascotas = from m in db.Mascotas select m;
+
+            switch (ordena) 
+            {
+                case "Raza desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Raza); 
+                    break;
+                default:
+                    mascotas = mascotas.OrderBy(m => m.Raza); 
+                   break; 
+            }
+
             int tamañoPag = 3;
             int numPag = (pag ?? 1);
-            return View(db.Mascotas.OrderBy(m => m.Nombre).ToPagedList(numPag, tamañoPag));
+            return View(mascotas.ToPagedList(numPag, tamañoPag));
         }
 
         // GET: Mascotas/Details/5
