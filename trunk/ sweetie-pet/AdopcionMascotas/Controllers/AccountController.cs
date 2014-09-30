@@ -91,6 +91,7 @@ namespace AdopcionMascotas.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                user.Fecha_Nac = model.Fecha_Nac;
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

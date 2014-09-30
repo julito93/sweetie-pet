@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdopcionMascotas.Models
 {
@@ -53,6 +54,11 @@ namespace AdopcionMascotas.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Fecha de nacimiento")]
+        public DateTime Fecha_Nac { get; set; }
+        
         [Required]
         [EmailAddress]
         [Display(Name = "Correo electrónico")]
