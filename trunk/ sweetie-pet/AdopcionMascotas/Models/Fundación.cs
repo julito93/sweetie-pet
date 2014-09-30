@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AdopcionMascotas.Models
 {
-    public class Fundación
+    public partial class Fundación
     {
         public int ID { get; set; }
         public string Nombre { get; set; }

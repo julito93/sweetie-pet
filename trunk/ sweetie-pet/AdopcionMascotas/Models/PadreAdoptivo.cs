@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AdopcionMascotas.Models
 {
-    public class PadreAdoptivo
+    public partial class PadreAdoptivo
     {
         public int ID { get; set; }
         public string Nombre {get; set;}
