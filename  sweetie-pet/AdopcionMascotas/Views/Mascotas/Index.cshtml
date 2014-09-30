@@ -13,65 +13,66 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+            @Html.ActionLink("Nombre", "Index", new { ordena = ViewBag.Nombre })
         </th>
         <th>
             @Html.ActionLink("Raza", "Index", new { ordena = ViewBag.Raza })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Color)
+            @Html.ActionLink("Color", "Index", new { ordena = ViewBag.Color })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Tamaño)
+            @Html.ActionLink("Tamaño", "Index", new { ordena = ViewBag.Tamaño })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Sexo)
+            @Html.ActionLink("Sexo", "Index", new { ordena = ViewBag.Sexo })
+        </th>
+        <th>
+            @Html.ActionLink("Edad", "Index", new { ordena = ViewBag.Edad })
+        </th>
+        <th>
+            @Html.ActionLink("Tipo", "Index", new { ordena = ViewBag.Tipo })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Historia)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Edad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Tipo)
-        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Raza)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Color)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tamaño)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sexo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Historia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Edad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tipo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Raza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tamaño)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sexo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Historia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Edad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 </table>
-Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount 
+Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
 @Html.PagedListPager(Model, pag => Url.Action("Index", new { pag, ordena = ViewBag.OrdenaActual, filtro = ViewBag.Filtro }))

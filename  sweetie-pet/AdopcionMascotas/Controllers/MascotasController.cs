@@ -18,17 +18,41 @@ namespace AdopcionMascotas.Controllers
         // GET: Mascotas
         public ActionResult Index( string ordena, int? pag )
         {
+            ViewBag.Nombre = String.IsNullOrEmpty(ordena) ? "Nombre desc" : "";
             ViewBag.Raza = String.IsNullOrEmpty(ordena) ? "Raza desc" : "";
-
+            ViewBag.Color = string.IsNullOrEmpty(ordena) ? "Color desc" : "";
+            ViewBag.Tamaño = string.IsNullOrEmpty(ordena) ? "Tamaño desc" : "";
+            ViewBag.Edad = String.IsNullOrEmpty(ordena) ? "Edad desc" : "";
+            ViewBag.Sexo = string.IsNullOrEmpty(ordena) ? "Sexo desc" : "";
+            ViewBag.Tipo = string.IsNullOrEmpty(ordena) ? "Tipo desc" : "";
             var mascotas = from m in db.Mascotas select m;
 
             switch (ordena) 
             {
+                case "Nombre desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Nombre);
+                    break;
                 case "Raza desc":
                     mascotas = mascotas.OrderByDescending(m => m.Raza); 
                     break;
+                case "Color desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Color);
+                    break;
+                case "Tamaño desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Tamaño);
+                    break;
+                case "Edad desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Edad);
+                    break;
+                case "Tipo desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Tipo);
+                    break;
+                case "Sexo desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Sexo);
+                    break;
+
                 default:
-                    mascotas = mascotas.OrderBy(m => m.Raza); 
+                    mascotas = mascotas.OrderBy(m => m.Nombre); 
                    break; 
             }
 
