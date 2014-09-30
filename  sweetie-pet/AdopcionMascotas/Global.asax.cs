@@ -1,4 +1,6 @@
-﻿using IdentitySample.Models;
+﻿using AdopcionMascotas.App_Start;
+using AdopcionMascotas.Models;
+using IdentitySample.Models;
 using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -16,6 +18,8 @@ namespace IdentitySample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            CargarObjetos.cargar(new Contexto());
         }
     }
 }
