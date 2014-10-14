@@ -7,15 +7,33 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdopcionMascotas.Models;
+using IdentitySample.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AdopcionMascotas.Controllers
 {
     public class PadresAdoptivosController : Controller
     {
-        private Contexto db = new Contexto();
+        private ApplicationDbContext db; 
+        private ApplicationUserManager manager;
+
+        public PadresAdoptivosController()
+        {
+            db = new ApplicationDbContext();
+            manager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
+        }
 
         // GET: PadresAdoptivos
         public ActionResult Index()
+        {
+            var usuarioFundacion = manager.FindById(User.Identity.GetUserId());
+            var padresAdoptivos = db.PadreAdoptivoes.Where(p => p.usuario.Id == usuarioFundacion.Id).ToList();
+            return View(padresAdoptivos);
+        }
+
+        [Authorize(Roles ="Admin")]
+        public ActionResult TodosLosPadresAdoptivos()
         {
             return View(db.PadreAdoptivoes.ToList());
         }

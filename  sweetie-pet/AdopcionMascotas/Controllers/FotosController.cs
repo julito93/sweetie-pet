@@ -7,12 +7,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdopcionMascotas.Models;
+using IdentitySample.Models;
 
 namespace AdopcionMascotas.Controllers
 {
     public class FotosController : Controller
     {
-        private Contexto db = new Contexto();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Fotos
         public ActionResult Index()

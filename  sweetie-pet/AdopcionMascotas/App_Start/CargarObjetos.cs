@@ -1,4 +1,5 @@
 ﻿using AdopcionMascotas.Models;
+using IdentitySample.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace AdopcionMascotas.App_Start
 {
     public class CargarObjetos
     {
-        public static void cargar (Contexto ctx)
+        public static void cargar (ApplicationDbContext ctx)
         {
 
             

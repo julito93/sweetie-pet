@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IdentitySample.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,7 +16,7 @@ namespace AdopcionMascotas.Models
         public string Telefono { get; set; }
 
         public virtual ICollection<SolicitudAdopcion> Adopciones { get; set; }
-        
+        public UsuarioAdoptivo usuario;
         public PadreAdoptivo()
         {
             this.Adopciones = new HashSet<SolicitudAdopcion>();
