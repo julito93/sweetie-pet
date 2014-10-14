@@ -8,74 +8,85 @@ using System.Web;
 using System.Web.Mvc;
 using AdopcionMascotas.Models;
 using PagedList;
+using IdentitySample.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 
 namespace AdopcionMascotas.Controllers
 {
+    [Authorize]
     public class MascotasController : Controller
     {
-        private Contexto db = new Contexto();
+        private ApplicationDbContext db;
+        
+
+        public MascotasController()
+        {
+            db = new ApplicationDbContext();
+        }
 
         // GET: Mascotas
         public ActionResult Index( string ordena, int? pag )
         {
-            ViewBag.Nombre = String.IsNullOrEmpty(ordena) ? "Nombre desc" : "";
-            ViewBag.Raza = ordena == "Raza" ? "Raza desc" : "Raza";
-            ViewBag.Color = ordena == "Color" ? "Color desc" : "Color";
-            ViewBag.Tamaño = ordena == "Tamaño" ? "Tamaño desc" : "Tamaño";
-            ViewBag.Edad = ordena == "Edad" ? "Edad desc" : "Edad";
-            ViewBag.Sexo = ordena == "Sexo" ? "Sexo desc" : "Sexo";
-            ViewBag.Tipo = ordena == "Tipo" ? "Tipo desc" : "Tipo";
-            var mascotas = from m in db.Mascotas select m;
+                ViewBag.Nombre = String.IsNullOrEmpty(ordena) ? "Nombre desc" : "";
+                ViewBag.Raza = ordena == "Raza" ? "Raza desc" : "Raza";
+                ViewBag.Color = ordena == "Color" ? "Color desc" : "Color";
+                ViewBag.Tamaño = ordena == "Tamaño" ? "Tamaño desc" : "Tamaño";
+                ViewBag.Edad = ordena == "Edad" ? "Edad desc" : "Edad";
+                ViewBag.Sexo = ordena == "Sexo" ? "Sexo desc" : "Sexo";
+                ViewBag.Tipo = ordena == "Tipo" ? "Tipo desc" : "Tipo";
+                var mascotas = from m in db.Mascotas select m;
 
-            switch (ordena) 
-            {
-                case "Nombre desc":
-                    mascotas = mascotas.OrderByDescending(m => m.Nombre);
-                    break;
-                case "Raza desc":
-                    mascotas = mascotas.OrderByDescending(m => m.Raza); 
-                    break;
-                case "Color desc":
-                    mascotas = mascotas.OrderByDescending(m => m.Color);
-                    break;
-                case "Tamaño desc":
-                    mascotas = mascotas.OrderByDescending(m => m.Tamaño);
-                    break;
-                case "Edad desc":
-                    mascotas = mascotas.OrderByDescending(m => m.Edad);
-                    break;
-                case "Tipo desc":
-                    mascotas = mascotas.OrderByDescending(m => m.Tipo);
-                    break;
-                case "Sexo desc":
-                    mascotas = mascotas.OrderByDescending(m => m.Sexo);
-                    break;
-                case "Raza":
-                    mascotas = mascotas.OrderBy(m => m.Raza);
-                    break;
-                case "Color":
-                    mascotas = mascotas.OrderBy(m => m.Color);
-                    break;
-                case "Tamaño":
-                    mascotas = mascotas.OrderBy(m => m.Tamaño);
-                    break;
-                case "Edad":
-                    mascotas = mascotas.OrderBy(m => m.Edad);
-                    break;
-                case "Tipo":
-                    mascotas = mascotas.OrderBy(m => m.Tipo);
-                    break;
-                case "Sexo":
-                    mascotas = mascotas.OrderBy(m => m.Sexo);
-                    break;
-                default:
-                    mascotas = mascotas.OrderBy(m => m.Nombre); 
-                   break; 
-            }
+                switch (ordena)
+                {
+                    case "Nombre desc":
+                        mascotas = mascotas.OrderByDescending(m => m.Nombre);
+                        break;
+                    case "Raza desc":
+                        mascotas = mascotas.OrderByDescending(m => m.Raza);
+                        break;
+                    case "Color desc":
+                        mascotas = mascotas.OrderByDescending(m => m.Color);
+                        break;
+                    case "Tamaño desc":
+                        mascotas = mascotas.OrderByDescending(m => m.Tamaño);
+                        break;
+                    case "Edad desc":
+                        mascotas = mascotas.OrderByDescending(m => m.Edad);
+                        break;
+                    case "Tipo desc":
+                        mascotas = mascotas.OrderByDescending(m => m.Tipo);
+                        break;
+                    case "Sexo desc":
+                        mascotas = mascotas.OrderByDescending(m => m.Sexo);
+                        break;
+                    case "Raza":
+                        mascotas = mascotas.OrderBy(m => m.Raza);
+                        break;
+                    case "Color":
+                        mascotas = mascotas.OrderBy(m => m.Color);
+                        break;
+                    case "Tamaño":
+                        mascotas = mascotas.OrderBy(m => m.Tamaño);
+                        break;
+                    case "Edad":
+                        mascotas = mascotas.OrderBy(m => m.Edad);
+                        break;
+                    case "Tipo":
+                        mascotas = mascotas.OrderBy(m => m.Tipo);
+                        break;
+                    case "Sexo":
+                        mascotas = mascotas.OrderBy(m => m.Sexo);
+                        break;
+                    default:
+                        mascotas = mascotas.OrderBy(m => m.Nombre);
+                        break;
+                }
 
-            int tamañoPag = 3;
-            int numPag = (pag ?? 1);
-            return View(mascotas.ToPagedList(numPag, tamañoPag));
+                int tamañoPag = 3;
+                int numPag = (pag ?? 1);
+                return View(mascotas.ToPagedList(numPag, tamañoPag));
         }
 
         // GET: Mascotas/Details/5

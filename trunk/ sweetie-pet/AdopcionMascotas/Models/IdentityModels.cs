@@ -4,6 +4,7 @@ using System;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AdopcionMascotas.Models;
 
 namespace IdentitySample.Models
 {
@@ -19,6 +20,18 @@ namespace IdentitySample.Models
         }
 
       //  public DateTime Fecha_Nac { get; set; }
+    }
+
+    // usuario del padre adoptivo cuando se registra
+    public class UsuarioAdoptivo : ApplicationUser
+    {
+        public PadreAdoptivo padreAdoptivo;
+    }
+
+    //usuario de una fundacion cuando se registra
+    public class UsuarioFundacion : ApplicationUser
+    {
+        public Fundación fundacion;
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -39,5 +52,15 @@ namespace IdentitySample.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<AdopcionMascotas.Models.Fundación> Fundaciones { get; set; }
+
+        public System.Data.Entity.DbSet<AdopcionMascotas.Models.Mascota> Mascotas { get; set; }
+
+        public System.Data.Entity.DbSet<AdopcionMascotas.Models.Foto> Fotoes { get; set; }
+
+        public System.Data.Entity.DbSet<AdopcionMascotas.Models.PadreAdoptivo> PadreAdoptivoes { get; set; }
+
+        public System.Data.Entity.DbSet<AdopcionMascotas.Models.SolicitudAdopcion> SolicitudAdopcions { get; set; }
     }
 }
