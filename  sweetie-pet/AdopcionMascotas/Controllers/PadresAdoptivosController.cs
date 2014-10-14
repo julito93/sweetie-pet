@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AdopcionMascotas.Controllers
 {
+    [Authorize]
     public class PadresAdoptivosController : Controller
     {
         private ApplicationDbContext db; 
