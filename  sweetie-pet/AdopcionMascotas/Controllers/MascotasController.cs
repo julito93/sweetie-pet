@@ -18,14 +18,10 @@ namespace AdopcionMascotas.Controllers
     [Authorize]
     public class MascotasController : Controller
     {
-        private ApplicationDbContext db;
+        private ApplicationDbContext db = new ApplicationDbContext();
         
 
-        public MascotasController()
-        {
-            db = new ApplicationDbContext();
-        }
-
+  
         // GET: Mascotas
         public ActionResult Index( string ordena, int? pag )
         {

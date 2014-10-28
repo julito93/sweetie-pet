@@ -18,7 +18,6 @@ namespace AdopcionMascotas.Models
         public string Contraseña { get; set; }
 
         public virtual ICollection<Mascota> Mascotas { get; set; }
-        public virtual UsuarioFundacion Usuario { get; set; }
 
         public Fundación ()
         {

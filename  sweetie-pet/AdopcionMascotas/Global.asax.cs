@@ -19,7 +19,7 @@ namespace IdentitySample
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            CargarObjetos.cargar(new ApplicationDbContext());
+           // CargarObjetos.cargar(new ApplicationDbContext());
         }
     }
 }
