@@ -1,4 +1,4 @@
-﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+﻿@model  IdentitySample.Models.ApplicationRole
 
 @{
     ViewBag.Title = "Delete";
@@ -19,6 +19,13 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripción)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripción)
+        </dd>
+
     </dl>
     @using (Html.BeginForm())
     {

@@ -14,9 +14,9 @@ namespace AdopcionMascotas.Models
         public string Dirección { get; set; }
         public string Barrio { get; set; }
         public string Telefono { get; set; }
+   
 
         public virtual ICollection<SolicitudAdopcion> Adopciones { get; set; }
-        public UsuarioAdoptivo usuario;
         public PadreAdoptivo()
         {
             this.Adopciones = new HashSet<SolicitudAdopcion>();

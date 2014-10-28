@@ -16,20 +16,13 @@ namespace AdopcionMascotas.Controllers
     [Authorize]
     public class PadresAdoptivosController : Controller
     {
-        private ApplicationDbContext db; 
-        private ApplicationUserManager manager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-        public PadresAdoptivosController()
-        {
-            db = new ApplicationDbContext();
-            manager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
-        }
-
+        
         // GET: PadresAdoptivos
         public ActionResult Index()
         {
-            var usuarioFundacion = manager.FindById(User.Identity.GetUserId());
-            var padresAdoptivos = db.PadreAdoptivoes.Where(p => p.usuario.Id == usuarioFundacion.Id).ToList();
+            var padresAdoptivos = db.PadreAdoptivoes.ToList();
             return View(padresAdoptivos);
         }
 

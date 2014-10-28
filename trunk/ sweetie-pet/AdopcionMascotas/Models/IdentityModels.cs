@@ -22,18 +22,6 @@ namespace IdentitySample.Models
       //  public DateTime Fecha_Nac { get; set; }
     }
 
-    // usuario del padre adoptivo cuando se registra
-    public class UsuarioAdoptivo : ApplicationUser
-    {
-        public PadreAdoptivo padreAdoptivo;
-    }
-
-    //usuario de una fundacion cuando se registra
-    public class UsuarioFundacion : ApplicationUser
-    {
-        public Fundación fundacion;
-    }
-
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -62,5 +50,11 @@ namespace IdentitySample.Models
         public System.Data.Entity.DbSet<AdopcionMascotas.Models.PadreAdoptivo> PadreAdoptivoes { get; set; }
 
         public System.Data.Entity.DbSet<AdopcionMascotas.Models.SolicitudAdopcion> SolicitudAdopcions { get; set; }
+    }
+    public class ApplicationRole : IdentityRole
+    {
+        public ApplicationRole() : base() { }
+        public ApplicationRole(string nombre) : base(nombre) { }
+        public string Descripción { get; set; }
     }
 }

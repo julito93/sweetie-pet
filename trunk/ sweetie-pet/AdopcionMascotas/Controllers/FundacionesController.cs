@@ -11,6 +11,7 @@ using IdentitySample.Models;
 
 namespace AdopcionMascotas.Controllers
 {
+    [Authorize(Roles="Fundacion")]
     public class FundacionesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -98,13 +98,15 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
-                var role = new IdentityRole(roleViewModel.Name);
+                var role = new ApplicationRole(roleViewModel.Name);
                 var roleresult = await RoleManager.CreateAsync(role);
+                role.Descripción = roleViewModel.Descripción;
                 if (!roleresult.Succeeded)
                 {
                     ModelState.AddModelError("", roleresult.Errors.First());
                     return View();
                 }
+              
                 return RedirectToAction("Index");
             }
             return View();
@@ -124,6 +126,7 @@ namespace IdentitySample.Controllers
                 return HttpNotFound();
             }
             RoleViewModel roleModel = new RoleViewModel { Id = role.Id, Name = role.Name };
+            roleModel.Descripción = role.Descripción;
             return View(roleModel);
         }
 
@@ -138,8 +141,9 @@ namespace IdentitySample.Controllers
             {
                 var role = await RoleManager.FindByIdAsync(roleModel.Id);
                 role.Name = roleModel.Name;
+                role.Descripción = roleModel.Descripción;
                 await RoleManager.UpdateAsync(role);
-                return RedirectToAction("Index");
+                               return RedirectToAction("Index");
             }
             return View();
         }
