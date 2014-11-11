@@ -69,9 +69,7 @@ namespace AdopcionMascotas.App_Start
             mascotas[3].Fotos.Add(fotos[5]);
             mascotas[4].Fotos.Add(fotos[6]);
             ctx.SaveChanges();
-            
-
         }
-
+        
     }
 }

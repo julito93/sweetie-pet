@@ -22,17 +22,22 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Fundaciones", "Index", "Fundaciones")</li>
-                    <li>@Html.ActionLink("Mascotas", "Index", "Mascotas")</li>
-                    <li>@Html.ActionLink("Padres", "Index", "PadresAdoptivos")</li>
-                    <li>@Html.ActionLink("Solicitudes", "Index", "SolicitudesAdopciones")</li>
+                    
+                    @if(Request.IsAuthenticated && User.IsInRole("Fundacion") ){
+                    <li>@Html.ActionLink("Mis Mascotas", "Index", "Mascotas")</li>
+                    <li>@Html.ActionLink(" Mis Padres Adoptivos", "Index", "PadresAdoptivos")</li>
+                    <li>@Html.ActionLink("Mis Solicitudes", "Index", "SolicitudesAdopciones")</li>
+                    }
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin")) {
+                        <li>@Html.ActionLink("Solicitudes", "Index", "SolicitudesAdopciones")</li>
+                        <li>@Html.ActionLink("Todos los Padres adoptivos", "TodosLosPadresAdoptivos", "PadresAdoptivos")</li>
+                        <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
+                        <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
+                        
+                    }
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin")) {
-                        <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
-                        <li>@Html.ActionLink("Todos los Padres adoptivos", "TodosLosPadresAdoptivos", "PadresAdoptivos")</li>
-                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

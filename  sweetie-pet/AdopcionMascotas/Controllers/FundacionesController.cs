@@ -8,13 +8,46 @@ using System.Web;
 using System.Web.Mvc;
 using AdopcionMascotas.Models;
 using IdentitySample.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AdopcionMascotas.Controllers
 {
-    [Authorize(Roles="Fundacion")]
+   
     public class FundacionesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private ApplicationRoleManager _roleManager;
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
+
+        public FundacionesController()
+        {
+            db = new ApplicationDbContext();
+        }
 
         // GET: Fundaciones
         public ActionResult Index(String ciudad, String nombre, Int32? id, Int32? MascotaID)
@@ -77,9 +110,27 @@ namespace AdopcionMascotas.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Fundaciones.Add(fundación);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var usuario = new ApplicationUser {UserName = fundación.Nombre, Email = fundación.Correo };
+                var adminresult = UserManager.Create(usuario, fundación.Contraseña);
+                if (adminresult.Succeeded)
+                {
+                    var result = UserManager.AddToRole(usuario.Id, "Fundacion");
+                    if (result.Succeeded)
+                    {
+                        fundación.usuario = usuario;
+                        db.Fundaciones.Add(fundación);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("no se le pudo asociar un rol al usuario", adminresult.Errors.First());
+                        ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
+                        return View(fundación);
+                    }
+                }
+                
+                
             }
 
             return View(fundación);

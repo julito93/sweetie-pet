@@ -199,6 +199,7 @@
     <Compile Include="Models\Mascota.cs" />
     <Compile Include="Models\PadreAdoptivo.cs" />
     <Compile Include="Models\SolicitudAdopcion.cs" />
+    <Compile Include="Models\UsuarioFundacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
