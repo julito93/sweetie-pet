@@ -123,9 +123,36 @@ namespace IdentitySample.Models
             var role = roleManager.FindByName(roleName);
             if (role == null) {
                 role = new ApplicationRole(roleName);
+                // se agregó la descripcion del rol Admin
+                role.Descripción = "Administrador de las funciones de SweetiePet";
                 var roleresult = roleManager.Create(role);
             }
 
+            // Create Role Fundacion if it does not exist
+            var rolesSweetieName = "Fundacion";
+            var rolesSweetieDescription = " Fundación afiliada a SweetiePet";
+
+            var rolFundacion = roleManager.FindByName(rolesSweetieName);
+            if (rolFundacion == null)
+            {
+                rolFundacion = new ApplicationRole(rolesSweetieName);
+                rolFundacion.Descripción = rolesSweetieDescription;
+                var roleresult = roleManager.Create(rolFundacion);
+            }
+
+            //Create Role Padre Adoptivo if it does not exist
+            rolesSweetieName = "Padre Adoptivo";
+            rolesSweetieDescription = "Persona que ha adopdato alguna mascota de una fundación de SweetiePet";
+
+
+
+            var rolPadreAdoptivo = roleManager.FindByName(rolesSweetieName);
+            if (rolPadreAdoptivo == null)
+            {
+                rolPadreAdoptivo = new ApplicationRole(rolesSweetieName);
+                rolPadreAdoptivo.Descripción = rolesSweetieDescription;
+                var roleresult = roleManager.Create(rolPadreAdoptivo);
+            }
             var user = userManager.FindByName(name);
             if (user == null) {
                 user = new ApplicationUser { UserName = name, Email = name };
@@ -133,10 +160,30 @@ namespace IdentitySample.Models
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }
 
+           // se crea el usuario para una fundación
+            var usuarioFundaciónNombre = "Paraiso de las mascotas";
+            var usuarioFundaciónCorreo = "paraisoMascotas@example.com";
+            var usuarioFundaciónPassword = "Paraiso@123456";
+
+            var usuarioFundacion = userManager.FindByName(usuarioFundaciónNombre);
+            if(usuarioFundacion ==null)
+            {
+                usuarioFundacion = new ApplicationUser { UserName = usuarioFundaciónNombre, Email = usuarioFundaciónCorreo };
+                var result = userManager.Create(usuarioFundacion, usuarioFundaciónPassword);
+                result = userManager.SetLockoutEnabled(usuarioFundacion.Id, false);
+            }
+
             // Add user admin to Role Admin if not already added
             var rolesForUser = userManager.GetRoles(user.Id);
             if (!rolesForUser.Contains(role.Name)) {
                 var result = userManager.AddToRole(user.Id, role.Name);
+            }
+
+            // agrega el usuarioFundacion al rol Fundacion si no existe todabía
+            var rolesDeParaiso = userManager.GetRoles(usuarioFundacion.Id);
+            if (!rolesDeParaiso.Contains(rolFundacion.Name))
+            {
+                var result = userManager.AddToRole(usuarioFundacion.Id, rolFundacion.Name);
             }
         }
     }
