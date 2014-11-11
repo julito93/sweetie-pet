@@ -161,9 +161,9 @@ namespace IdentitySample.Models
             }
 
            // se crea el usuario para una fundación
-            var usuarioFundaciónNombre = "Paraiso de las mascotas";
-            var usuarioFundaciónCorreo = "paraisoMascotas@example.com";
-            var usuarioFundaciónPassword = "Paraiso@123456";
+            const string usuarioFundaciónNombre = "Paraiso de las mascotas";
+            const string usuarioFundaciónCorreo = "paraisoMascotas@example.com";
+            const string usuarioFundaciónPassword = "Paraiso@123";
 
             var usuarioFundacion = userManager.FindByName(usuarioFundaciónNombre);
             if(usuarioFundacion ==null)
@@ -172,6 +172,19 @@ namespace IdentitySample.Models
                 var result = userManager.Create(usuarioFundacion, usuarioFundaciónPassword);
                 result = userManager.SetLockoutEnabled(usuarioFundacion.Id, false);
             }
+
+            const string usuarioPadreNombre = "Miguel Piza";
+            const string usuarioPadreCorreo = "miguel.piza@correo.icesi.edu.co";
+            const string usuarioPadrePassword = "Miguel@123";
+            var usuarioPadre = userManager.FindByName(usuarioPadreNombre);
+            if (usuarioPadre == null)
+            {
+                usuarioPadre = new ApplicationUser { UserName = usuarioPadreNombre, Email = usuarioPadreCorreo };
+                var result = userManager.Create(usuarioPadre, usuarioPadrePassword);
+                result = userManager.SetLockoutEnabled(usuarioPadre.Id, false);
+            }
+
+
 
             // Add user admin to Role Admin if not already added
             var rolesForUser = userManager.GetRoles(user.Id);
@@ -184,6 +197,13 @@ namespace IdentitySample.Models
             if (!rolesDeParaiso.Contains(rolFundacion.Name))
             {
                 var result = userManager.AddToRole(usuarioFundacion.Id, rolFundacion.Name);
+            }
+
+            // agrega el usuarioPadreAdoptivo al rol padreAdoptivo
+            var rolesDePadre = userManager.GetRoles(usuarioPadre.Id);
+            if (!rolesDePadre.Contains(rolPadreAdoptivo.Name))
+            {
+                var result = userManager.AddToRole(usuarioPadre.Id, rolPadreAdoptivo.Name);
             }
         }
     }
