@@ -19,6 +19,7 @@ namespace AdopcionMascotas.Models
 
         public virtual ICollection<Mascota> Mascotas { get; set; }
 
+        public  ApplicationUser usuario;
         public Fundación ()
         {
             this.Mascotas = new HashSet<Mascota>();
