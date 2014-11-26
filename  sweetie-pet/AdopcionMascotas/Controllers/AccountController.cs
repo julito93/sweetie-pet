@@ -19,7 +19,7 @@ namespace IdentitySample.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -162,21 +162,17 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-      /*          var roleName = "Usuario";
-                var role=RoleManager.FindByName(roleName);
+                var result = UserManager.Create(user, model.Password);
+                result = UserManager.SetLockoutEnabled(user.Id, false);
 
 
-                // Add user admin to Role Admin if not already added
-                var rolesForUser = UserManager.GetRoles(user.Id);
-                if (!rolesForUser.Contains(role.Name))
-                {
-                    var res = UserManager.AddToRole(user.Id, role.Name);
-                }
+                var roleName = "Usuario";
+                var role = RoleManager.FindByName(roleName);
+                result = UserManager.AddToRole(user.Id, role.Name);
 
 
-*/
-                var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
