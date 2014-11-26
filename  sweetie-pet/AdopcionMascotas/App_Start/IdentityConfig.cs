@@ -105,7 +105,7 @@ namespace IdentitySample.Models
     // This is useful if you do not want to tear down the database each time you run the application.
     // public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     // This example shows you how to create a new database if the Model changes
-    public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext> 
+    public class ApplicationDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context) {
             InitializeIdentityForEF(context);
@@ -140,6 +140,18 @@ namespace IdentitySample.Models
                 rolFundacion = new ApplicationRole(rolesSweetieName);
                 rolFundacion.Descripción = rolesSweetieDescription;
                 var roleresult = roleManager.Create(rolFundacion);
+            }
+
+            // Create Usuario Fundacion if it does not exist
+            rolesSweetieName = "Usuario";
+            rolesSweetieDescription = "Usuario de SweetiePet";
+
+            var rolUsuario = roleManager.FindByName(rolesSweetieName);
+            if (rolUsuario == null)
+            {
+                rolUsuario = new ApplicationRole(rolesSweetieName);
+                rolUsuario.Descripción = rolesSweetieDescription;
+                var roleresult = roleManager.Create(rolUsuario);
             }
 
             //Create Role Padre Adoptivo if it does not exist
