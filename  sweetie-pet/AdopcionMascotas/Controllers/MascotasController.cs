@@ -18,71 +18,76 @@ namespace AdopcionMascotas.Controllers
     [Authorize]
     public class MascotasController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        
+        private ApplicationDbContext db;
+        private ApplicationUserManager manager;
 
-  
-        // GET: Mascotas
-        public ActionResult Index( string ordena, int? pag )
+        public MascotasController()
         {
-                ViewBag.Nombre = String.IsNullOrEmpty(ordena) ? "Nombre desc" : "";
-                ViewBag.Raza = ordena == "Raza" ? "Raza desc" : "Raza";
-                ViewBag.Color = ordena == "Color" ? "Color desc" : "Color";
-                ViewBag.Tamaño = ordena == "Tamaño" ? "Tamaño desc" : "Tamaño";
-                ViewBag.Edad = ordena == "Edad" ? "Edad desc" : "Edad";
-                ViewBag.Sexo = ordena == "Sexo" ? "Sexo desc" : "Sexo";
-                ViewBag.Tipo = ordena == "Tipo" ? "Tipo desc" : "Tipo";
-                var mascotas = from m in db.Mascotas select m;
+            db = new ApplicationDbContext();
+            manager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
+        }
 
-                switch (ordena)
-                {
-                    case "Nombre desc":
-                        mascotas = mascotas.OrderByDescending(m => m.Nombre);
-                        break;
-                    case "Raza desc":
-                        mascotas = mascotas.OrderByDescending(m => m.Raza);
-                        break;
-                    case "Color desc":
-                        mascotas = mascotas.OrderByDescending(m => m.Color);
-                        break;
-                    case "Tamaño desc":
-                        mascotas = mascotas.OrderByDescending(m => m.Tamaño);
-                        break;
-                    case "Edad desc":
-                        mascotas = mascotas.OrderByDescending(m => m.Edad);
-                        break;
-                    case "Tipo desc":
-                        mascotas = mascotas.OrderByDescending(m => m.Tipo);
-                        break;
-                    case "Sexo desc":
-                        mascotas = mascotas.OrderByDescending(m => m.Sexo);
-                        break;
-                    case "Raza":
-                        mascotas = mascotas.OrderBy(m => m.Raza);
-                        break;
-                    case "Color":
-                        mascotas = mascotas.OrderBy(m => m.Color);
-                        break;
-                    case "Tamaño":
-                        mascotas = mascotas.OrderBy(m => m.Tamaño);
-                        break;
-                    case "Edad":
-                        mascotas = mascotas.OrderBy(m => m.Edad);
-                        break;
-                    case "Tipo":
-                        mascotas = mascotas.OrderBy(m => m.Tipo);
-                        break;
-                    case "Sexo":
-                        mascotas = mascotas.OrderBy(m => m.Sexo);
-                        break;
-                    default:
-                        mascotas = mascotas.OrderBy(m => m.Nombre);
-                        break;
-                }
+        // GET: Mascotas
+        public ActionResult Index(string ordena, int? pag)
+        {
+            ViewBag.Nombre = String.IsNullOrEmpty(ordena) ? "Nombre desc" : "";
+            ViewBag.Raza = ordena == "Raza" ? "Raza desc" : "Raza";
+            ViewBag.Color = ordena == "Color" ? "Color desc" : "Color";
+            ViewBag.Tamaño = ordena == "Tamaño" ? "Tamaño desc" : "Tamaño";
+            ViewBag.Edad = ordena == "Edad" ? "Edad desc" : "Edad";
+            ViewBag.Sexo = ordena == "Sexo" ? "Sexo desc" : "Sexo";
+            ViewBag.Tipo = ordena == "Tipo" ? "Tipo desc" : "Tipo";
+            var usuario = manager.FindById(User.Identity.GetUserId());
+            var mascotas = db.Mascotas.Where(m=>m.Fundación.Correo.Equals(usuario.Email));
 
-                int tamañoPag = 3;
-                int numPag = (pag ?? 1);
-                return View(mascotas.ToPagedList(numPag, tamañoPag));
+            switch (ordena)
+            {
+                case "Nombre desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Nombre);
+                    break;
+                case "Raza desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Raza);
+                    break;
+                case "Color desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Color);
+                    break;
+                case "Tamaño desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Tamaño);
+                    break;
+                case "Edad desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Edad);
+                    break;
+                case "Tipo desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Tipo);
+                    break;
+                case "Sexo desc":
+                    mascotas = mascotas.OrderByDescending(m => m.Sexo);
+                    break;
+                case "Raza":
+                    mascotas = mascotas.OrderBy(m => m.Raza);
+                    break;
+                case "Color":
+                    mascotas = mascotas.OrderBy(m => m.Color);
+                    break;
+                case "Tamaño":
+                    mascotas = mascotas.OrderBy(m => m.Tamaño);
+                    break;
+                case "Edad":
+                    mascotas = mascotas.OrderBy(m => m.Edad);
+                    break;
+                case "Tipo":
+                    mascotas = mascotas.OrderBy(m => m.Tipo);
+                    break;
+                case "Sexo":
+                    mascotas = mascotas.OrderBy(m => m.Sexo);
+                    break;
+                default:
+                    mascotas = mascotas.OrderBy(m => m.Nombre);
+                    break;
+            }
+            int tamañoPag = 3;
+            int numPag = (pag ?? 1);
+            return View(mascotas.ToPagedList(numPag, tamañoPag));
         }
 
         // GET: Mascotas/Details/5
@@ -113,8 +118,10 @@ namespace AdopcionMascotas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Nombre,Raza,Color,Tamaño,Sexo,Historia,Edad,Tipo")] Mascota mascota)
         {
+            var usuario = manager.FindById(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
+                mascota.Fundación = db.Fundaciones.Where(f => f.Correo.Equals(usuario.Email)).Single();
                 db.Mascotas.Add(mascota);
                 db.SaveChanges();
                 return RedirectToAction("Index");
