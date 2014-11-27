@@ -28,7 +28,14 @@
                     <li>@Html.ActionLink(" Mis Padres Adoptivos", "Index", "PadresAdoptivos")</li>
                     <li>@Html.ActionLink("Mis Solicitudes", "Index", "SolicitudesAdopciones")</li>
                     }
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin")) {
+                    @if (Request.IsAuthenticated && User.IsInRole("Padre Adoptivo"))
+                    {
+                        <li>@Html.ActionLink("Mis Mascotas", "Index", "Mascotas")</li>
+                        <li>@Html.ActionLink("Mis Solicitudes", "Index", "SolicitudesAdopciones")</li>
+                    }
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("todas las Mascotas", "Index", "Mascotas")</li>
                         <li>@Html.ActionLink("Solicitudes", "Index", "SolicitudesAdopciones")</li>
                         <li>@Html.ActionLink("Todos los Padres adoptivos", "TodosLosPadresAdoptivos", "PadresAdoptivos")</li>
                         <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>

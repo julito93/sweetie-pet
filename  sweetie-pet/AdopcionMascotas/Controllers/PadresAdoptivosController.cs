@@ -81,7 +81,7 @@ namespace AdopcionMascotas.Controllers
         }
 
         // GET: PadresAdoptivos/Create
-        [Authorize(Roles = "Usuario, Padre Adoptivo")]
+        [Authorize(Roles = "Usuario,Padre Adoptivo,Admin")]
         public ActionResult Create(Int32? MascotaID)
         {
             var user = manager.FindById(User.Identity.GetUserId());
@@ -118,23 +118,49 @@ namespace AdopcionMascotas.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PadreAdoptivoes.Add(padreAdoptivo);
-
-                var fecha = DateTime.Today.Date.ToString();
-                var estado = "Sin Aprobar";
-                SolicitudAdopcion s = new SolicitudAdopcion()
+                var usuario = new ApplicationUser { UserName = padreAdoptivo.Nombre, Email = padreAdoptivo.Nombre+"@example.com" };
+                var ancho = padreAdoptivo.Nombre.Length-1;
+                var contraseña =  padreAdoptivo.Nombre.ToUpper().First()+padreAdoptivo.Nombre.Substring(1,ancho)+"@123";
+                var adminresult = UserManager.Create(usuario, contraseña);
+                if (adminresult.Succeeded)
                 {
-                    PadreAdoptivo = padreAdoptivo,
-                    Estado = estado,
-                    PadreAdoptivo_Cedula = padreAdoptivo.Cedula,
-                    Fecha_Adop = fecha
-                };
-                var mas = db.Mascotas.Where(m => m.ID == MascotaID).Single();
-                s.Mascotas.Add(mas);
-                db.SolicitudAdopcions.Add(s);
-                db.SaveChanges();
+                    var result = UserManager.AddToRole(usuario.Id, "Padre Adoptivo");
+                    if (result.Succeeded)
+                    {
+                        padreAdoptivo.usuario = usuario;
+                        db.PadreAdoptivoes.Add(padreAdoptivo);
+                        db.SaveChanges();
 
-                return RedirectToAction("Index", "SolicitudesAdopciones");
+                        if(MascotaID!=null)
+                        {
+                            var fecha = DateTime.Today.Date.ToString();
+                            var estado = "Sin Aprobar";
+                            SolicitudAdopcion s = new SolicitudAdopcion()
+                            {
+                                PadreAdoptivo = padreAdoptivo,
+                                Estado = estado,
+                                PadreAdoptivo_Cedula = padreAdoptivo.Cedula,
+                                Fecha_Adop = fecha
+                            };
+                            var mas = db.Mascotas.Where(m => m.ID == MascotaID).Single();
+                            s.Mascotas.Add(mas);
+                            db.SolicitudAdopcions.Add(s);
+                            db.SaveChanges();
+
+                            return RedirectToAction("Index", "SolicitudesAdopciones");
+                        }
+
+                        return RedirectToAction("Index", "PadresAdoptivos");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("no se le pudo asociar un rol al usuario", adminresult.Errors.First());
+                        ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
+                        return View(padreAdoptivo);
+                    }
+                }
+               
+                
             }
 
             return View(padreAdoptivo);

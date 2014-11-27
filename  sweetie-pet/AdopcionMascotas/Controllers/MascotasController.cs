@@ -20,7 +20,6 @@ namespace AdopcionMascotas.Controllers
     {
         private ApplicationDbContext db;
         private ApplicationUserManager manager;
-
         public MascotasController()
         {
             db = new ApplicationDbContext();
@@ -38,8 +37,20 @@ namespace AdopcionMascotas.Controllers
             ViewBag.Sexo = ordena == "Sexo" ? "Sexo desc" : "Sexo";
             ViewBag.Tipo = ordena == "Tipo" ? "Tipo desc" : "Tipo";
             var usuario = manager.FindById(User.Identity.GetUserId());
-            var mascotas = db.Mascotas.Where(m=>m.Fundación.Correo.Equals(usuario.Email));
+            
+            var roles= manager.GetRoles(usuario.Id);
 
+            IEnumerable<Mascota> mascotas = new List<Mascota>();
+            if (roles.Contains("Padre Adoptivo"))
+            {
+                mascotas.Union(db.Mascotas.Where(m => m.Adopcion.PadreAdoptivo.usuario.Id.Equals(usuario.Id)));
+            }
+            else if (roles.Contains("Fundacion"))
+            {
+                mascotas.Union(db.Mascotas.Where(m => m.Fundación.Correo.Equals(usuario.Email)));
+            }
+            else if (roles.Contains("Admin"))
+                mascotas.Union(db.Mascotas);
             switch (ordena)
             {
                 case "Nombre desc":
