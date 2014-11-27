@@ -15,7 +15,7 @@ namespace AdopcionMascotas.Models
         public string Barrio { get; set; }
         public string Telefono { get; set; }
 
-        public ApplicationUser usuario;
+        public ApplicationUser usuario { get; set; }
         public virtual ICollection<SolicitudAdopcion> Adopciones { get; set; }
         public PadreAdoptivo()
         {
