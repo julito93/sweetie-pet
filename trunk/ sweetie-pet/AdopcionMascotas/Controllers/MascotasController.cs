@@ -43,7 +43,6 @@ namespace AdopcionMascotas.Controllers
             IEnumerable<Mascota> mascotas = new List<Mascota>();
             if (roles.Contains("Padre Adoptivo"))
             {
-                System.Diagnostics.Debug.WriteLine("Entra a buscar mascotas de padre");
                 mascotas = db.SolicitudAdopcions.Where(s => s.PadreAdoptivo.usuario.Id.Equals(usuario.Id) && s.Estado.Equals("Aprobado")).Select(s=>s.Mascota).ToList();
             }
             else if (roles.Contains("Fundacion"))
@@ -52,7 +51,6 @@ namespace AdopcionMascotas.Controllers
             }
             else if (roles.Contains("Admin"))
             {
-                System.Diagnostics.Debug.WriteLine("Entra a buscar mascotas");
                 mascotas = db.Mascotas.ToList();
             }
                 
@@ -139,7 +137,6 @@ namespace AdopcionMascotas.Controllers
             if (ModelState.IsValid)
             {
                 mascota.Fundación = db.Fundaciones.Where(f => f.Correo.Equals(usuario.Email)).Single();
-                System.Diagnostics.Debug.WriteLine("mascota asociada a la fundacion " + mascota.Fundación.Nombre);
                 db.Mascotas.Add(mascota);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace AdopcionMascotas.Controllers
 {
+    [Authorize]
     public class FundacionesController : Controller
     {
         private ApplicationDbContext db;
