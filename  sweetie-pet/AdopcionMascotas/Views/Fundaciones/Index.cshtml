@@ -74,6 +74,7 @@
         <tr>
             <th></th>
             <th>Nombre</th>
+            <th></th>
             <th>Raza</th>
             <th>Color</th>
             <th>Tamaño</th>
@@ -94,8 +95,9 @@
             }
 
             <tr class="@seleccionada1">
-
-                <th><img class="img-responsive" src="~/img/Tulips.jpg" /></th>
+                @item.Fotos.ElementAt(0).Url
+                <th><img class="img-responsive" src="@item.Fotos.ElementAt(0).Url" /></th>
+                <td>@item.Fotos.ElementAt(0).Url</td>
                 <td>@item.Nombre</td>
                 <td>@item.Raza</td>
                 <td>@item.Color</td>
@@ -118,19 +120,19 @@
 @if (Model.Fotos != null)
 {
     <h3>Fotos de la mascota seleccionada</h3>
-    <table class="table">
-        <tr>
-            <th>Url</th>
-        </tr>
+    <body class="table">
+        
+            <p>Fotos</p>
+        
         @foreach (var item in Model.Fotos)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Url)
-                </td>
+            <div>
+                <p>
+                <img class="img-responsive" src=@item.Url />
+                </p>
 
-            </tr>
+            </div>
         }
-    </table>
+    </body>
 }
 
