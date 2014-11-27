@@ -43,14 +43,19 @@ namespace AdopcionMascotas.Controllers
             IEnumerable<Mascota> mascotas = new List<Mascota>();
             if (roles.Contains("Padre Adoptivo"))
             {
-                mascotas.Union(db.SolicitudAdopcions.Where(s => s.PadreAdoptivo.usuario.Id.Equals(usuario.Id)).Select(s=>s.Mascota));
+                System.Diagnostics.Debug.WriteLine("Entra a buscar mascotas de padre");
+                mascotas = db.SolicitudAdopcions.Where(s => s.PadreAdoptivo.usuario.Id.Equals(usuario.Id) && s.Estado.Equals("Aprobado")).Select(s=>s.Mascota).ToList();
             }
             else if (roles.Contains("Fundacion"))
             {
-                mascotas.Union(db.Mascotas.Where(m => m.Fundación.Correo.Equals(usuario.Email)));
+                mascotas = db.Mascotas.Where(m => m.Fundación.Correo.Equals(usuario.Email)).ToList();
             }
             else if (roles.Contains("Admin"))
-                mascotas.Union(db.Mascotas);
+            {
+                System.Diagnostics.Debug.WriteLine("Entra a buscar mascotas");
+                mascotas = db.Mascotas.ToList();
+            }
+                
             switch (ordena)
             {
                 case "Nombre desc":
@@ -117,6 +122,7 @@ namespace AdopcionMascotas.Controllers
         }
 
         // GET: Mascotas/Create
+        [Authorize(Roles = "Fundacion")]
         public ActionResult Create()
         {
             return View();
@@ -133,6 +139,7 @@ namespace AdopcionMascotas.Controllers
             if (ModelState.IsValid)
             {
                 mascota.Fundación = db.Fundaciones.Where(f => f.Correo.Equals(usuario.Email)).Single();
+                System.Diagnostics.Debug.WriteLine("mascota asociada a la fundacion " + mascota.Fundación.Nombre);
                 db.Mascotas.Add(mascota);
                 db.SaveChanges();
                 return RedirectToAction("Index");

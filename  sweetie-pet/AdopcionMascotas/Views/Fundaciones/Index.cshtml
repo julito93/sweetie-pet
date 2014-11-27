@@ -94,8 +94,15 @@
             }
 
             <tr class="@seleccionada1">
-                <th><img class="img-responsive" src="@item.Fotos.ElementAt(0).Url" /></th>
-                <td>@item.Fotos.ElementAt(0).Url</td>
+                @if (item.Fotos.Count > 0)
+                {
+                    <th><img class="img-responsive" src="@item.Fotos.ElementAt(0).Url" /></th>
+                }
+                else
+                {
+                    <th><img class="img-responsive" src="" /></th>
+                }
+
                 <td>@item.Nombre</td>
                 <td>@item.Raza</td>
                 <td>@item.Color</td>
