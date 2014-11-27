@@ -10,15 +10,48 @@ using AdopcionMascotas.Models;
 using IdentitySample.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AdopcionMascotas.Controllers
 {
     [Authorize]
     public class PadresAdoptivosController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+        private ApplicationUserManager manager;
 
-        
+        public PadresAdoptivosController()
+        {
+            db = new ApplicationDbContext();
+            manager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
+        }
+
+        private ApplicationRoleManager _roleManager;
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         // GET: PadresAdoptivos
         public ActionResult Index()
         {
@@ -26,7 +59,7 @@ namespace AdopcionMascotas.Controllers
             return View(padresAdoptivos);
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult TodosLosPadresAdoptivos()
         {
             return View(db.PadreAdoptivoes.ToList());
@@ -48,8 +81,31 @@ namespace AdopcionMascotas.Controllers
         }
 
         // GET: PadresAdoptivos/Create
-        public ActionResult Create()
+        [Authorize(Roles = "Usuario, Padre Adoptivo")]
+        public ActionResult Create(Int32? MascotaID)
         {
+            var user = manager.FindById(User.Identity.GetUserId());
+            var role = RoleManager.FindByName("Padre Adoptivo");
+            var rolesForUser = UserManager.GetRoles(user.Id);
+            if (rolesForUser.Contains(role.Name))
+            {
+                var padre = db.PadreAdoptivoes.Where(p=>p.usuario.Email.Equals(user.Email) ).Single();
+                var fecha = DateTime.Today.Date.ToString();
+                var estado = "Sin Aprobar";
+                SolicitudAdopcion s = new SolicitudAdopcion()
+                {
+                    PadreAdoptivo = padre,
+                    Estado = estado,
+                    PadreAdoptivo_Cedula = padre.Cedula,
+                    Fecha_Adop = fecha
+                };
+                var mas = db.Mascotas.Where(m => m.ID == MascotaID).Single();
+                s.Mascotas.Add(mas);
+                db.SolicitudAdopcions.Add(s);
+                db.SaveChanges();
+                return RedirectToAction("Index", "SolicitudesAdopciones");
+            }
+
             return View();
         }
 
@@ -58,13 +114,27 @@ namespace AdopcionMascotas.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nombre,Cedula,Dirección,Barrio,Telefono")] PadreAdoptivo padreAdoptivo)
+        public ActionResult Create([Bind(Include = "ID,Nombre,Cedula,Dirección,Barrio,Telefono")] PadreAdoptivo padreAdoptivo, Int32? MascotaID)
         {
             if (ModelState.IsValid)
             {
                 db.PadreAdoptivoes.Add(padreAdoptivo);
+
+                var fecha = DateTime.Today.Date.ToString();
+                var estado = "Sin Aprobar";
+                SolicitudAdopcion s = new SolicitudAdopcion()
+                {
+                    PadreAdoptivo = padreAdoptivo,
+                    Estado = estado,
+                    PadreAdoptivo_Cedula = padreAdoptivo.Cedula,
+                    Fecha_Adop = fecha
+                };
+                var mas = db.Mascotas.Where(m => m.ID == MascotaID).Single();
+                s.Mascotas.Add(mas);
+                db.SolicitudAdopcions.Add(s);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "SolicitudesAdopciones");
             }
 
             return View(padreAdoptivo);
