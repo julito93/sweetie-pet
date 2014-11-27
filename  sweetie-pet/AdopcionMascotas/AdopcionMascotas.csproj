@@ -245,6 +245,7 @@
     <Content Include="img\8\8 %282%29.png" />
     <Content Include="img\9\9 %281%29.png" />
     <Content Include="img\9\9 %282%29.png" />
+    <Content Include="img\Tulips.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
