@@ -81,15 +81,15 @@ namespace AdopcionMascotas.Controllers
         }
 
         // GET: PadresAdoptivos/Create
-        [Authorize(Roles = "Usuario,Padre Adoptivo,Admin")]
+        [Authorize(Roles = "Usuario, Padre Adoptivo")]
         public ActionResult Create(Int32? MascotaID)
         {
             var user = manager.FindById(User.Identity.GetUserId());
             var role = RoleManager.FindByName("Padre Adoptivo");
-            var rolesForUser = UserManager.GetRoles(user.Id);
+            IList<string> rolesForUser = UserManager.GetRoles(user.Id);
             if (rolesForUser.Contains(role.Name))
             {
-                var padre = db.PadreAdoptivoes.Where(p=>p.usuario.Email.Equals(user.Email) ).Single();
+                var padre = db.PadreAdoptivoes.Where(p=>p.usuario.Id.Equals(user.Id) ).Single();
                 var fecha = DateTime.Today.Date.ToString();
                 var estado = "Sin Aprobar";
                 SolicitudAdopcion s = new SolicitudAdopcion()
@@ -105,7 +105,6 @@ namespace AdopcionMascotas.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index", "SolicitudesAdopciones");
             }
-
             return View();
         }
 
@@ -118,49 +117,27 @@ namespace AdopcionMascotas.Controllers
         {
             if (ModelState.IsValid)
             {
-                var usuario = new ApplicationUser { UserName = padreAdoptivo.Nombre, Email = padreAdoptivo.Nombre+"@example.com" };
-                var ancho = padreAdoptivo.Nombre.Length-1;
-                var contraseña =  padreAdoptivo.Nombre.ToUpper().First()+padreAdoptivo.Nombre.Substring(1,ancho)+"@123";
-                var adminresult = UserManager.Create(usuario, contraseña);
-                if (adminresult.Succeeded)
+                var user = manager.FindById(User.Identity.GetUserId());
+                padreAdoptivo.usuario = user;
+                db.PadreAdoptivoes.Add(padreAdoptivo);
+
+                var result = UserManager.AddToRole(user.Id, "Padre Adoptivo");
+
+                var fecha = DateTime.Today.Date.ToString();
+                var estado = "Sin Aprobar";
+                SolicitudAdopcion s = new SolicitudAdopcion()
                 {
-                    var result = UserManager.AddToRole(usuario.Id, "Padre Adoptivo");
-                    if (result.Succeeded)
-                    {
-                        padreAdoptivo.usuario = usuario;
-                        db.PadreAdoptivoes.Add(padreAdoptivo);
-                        db.SaveChanges();
+                    PadreAdoptivo = padreAdoptivo,
+                    Estado = estado,
+                    PadreAdoptivo_Cedula = padreAdoptivo.Cedula,
+                    Fecha_Adop = fecha
+                };
+                var mas = db.Mascotas.Where(m => m.ID == MascotaID).Single();
+                s.Mascotas.Add(mas);
+                db.SolicitudAdopcions.Add(s);
+                db.SaveChanges();
 
-                        if(MascotaID!=null)
-                        {
-                            var fecha = DateTime.Today.Date.ToString();
-                            var estado = "Sin Aprobar";
-                            SolicitudAdopcion s = new SolicitudAdopcion()
-                            {
-                                PadreAdoptivo = padreAdoptivo,
-                                Estado = estado,
-                                PadreAdoptivo_Cedula = padreAdoptivo.Cedula,
-                                Fecha_Adop = fecha
-                            };
-                            var mas = db.Mascotas.Where(m => m.ID == MascotaID).Single();
-                            s.Mascotas.Add(mas);
-                            db.SolicitudAdopcions.Add(s);
-                            db.SaveChanges();
-
-                            return RedirectToAction("Index", "SolicitudesAdopciones");
-                        }
-
-                        return RedirectToAction("Index", "PadresAdoptivos");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("no se le pudo asociar un rol al usuario", adminresult.Errors.First());
-                        ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
-                        return View(padreAdoptivo);
-                    }
-                }
-               
-                
+                return RedirectToAction("Index", "SolicitudesAdopciones");
             }
 
             return View(padreAdoptivo);
