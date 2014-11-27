@@ -8,7 +8,7 @@ namespace AdopcionMascotas.Models
     public class Foto
     {
         public int ID { get; set; }
-        public string Url { get; set; }
+        public String Url { get; set; }
 
         public Mascota Mascota { get; set; }
     }
