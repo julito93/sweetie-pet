@@ -21,11 +21,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Fundaciones", "Index", "Fundaciones")</li>
                     
+                    @if (Request.IsAuthenticated && User.IsInRole("Usuario"))
+                    {
+                        <li>@Html.ActionLink("Fundaciones", "Index", "Fundaciones")</li>
+                    }
                     @if(Request.IsAuthenticated && User.IsInRole("Fundacion") ){
                     <li>@Html.ActionLink("Mis Mascotas", "Index", "Mascotas")</li>
-                    <li>@Html.ActionLink(" Mis Padres Adoptivos", "Index", "PadresAdoptivos")</li>
+                    <li>@Html.ActionLink("Mis Padres Adoptivos", "Index", "PadresAdoptivos")</li>
                     <li>@Html.ActionLink("Mis Solicitudes", "Index", "SolicitudesAdopciones")</li>
                     }
                     @if (Request.IsAuthenticated && User.IsInRole("Padre Adoptivo"))
@@ -35,11 +38,11 @@
                     }
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("todas las Mascotas", "Index", "Mascotas")</li>
+                        <li>@Html.ActionLink("Mascotas", "Index", "Mascotas")</li>
                         <li>@Html.ActionLink("Solicitudes", "Index", "SolicitudesAdopciones")</li>
-                        <li>@Html.ActionLink("Todos los Padres adoptivos", "TodosLosPadresAdoptivos", "PadresAdoptivos")</li>
-                        <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
+                        <li>@Html.ActionLink("Padres adoptivos", "TodosLosPadresAdoptivos", "PadresAdoptivos")</li>
+                        <li>@Html.ActionLink("Roles", "Index", "RolesAdmin")</li>
+                        <li>@Html.ActionLink("Usuarios", "Index", "UsersAdmin")</li>
                         
                     }
                     <li>@Html.ActionLink("About", "About", "Home")</li>
