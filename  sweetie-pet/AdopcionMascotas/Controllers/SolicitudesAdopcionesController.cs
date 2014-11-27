@@ -8,17 +8,34 @@ using System.Web;
 using System.Web.Mvc;
 using AdopcionMascotas.Models;
 using IdentitySample.Models;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace AdopcionMascotas.Controllers
 {
+    [Authorize]
     public class SolicitudesAdopcionesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         // GET: SolicitudesAdopciones
         public ActionResult Index()
         {
-            return View(db.SolicitudAdopcions.ToList());
+            var usuario = UserManager.FindById(User.Identity.GetUserId());
+            return View(db.SolicitudAdopcions.Where(s=>s.PadreAdoptivo.usuario.Email.Equals(usuario.Email)).ToList());
         }
 
         // GET: SolicitudesAdopciones/Details/5
