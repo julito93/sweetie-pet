@@ -8,13 +8,14 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
-    @using(Html.BeginForm()){
-    
-    <text>
-    Ciudad: @Html.DropDownList("ciudad",(SelectList)ViewBag.ciudades, "Seleecione")<br />
-    Buscar fundacion por nombre: @Html.TextBox("nombre") <br/>
-    <input type ="submit" value= "Buscar"/>
-    </text>
+    @using (Html.BeginForm())
+    {
+
+        <text>
+            Ciudad: @Html.DropDownList("ciudad", (SelectList)ViewBag.ciudades, "Seleecione")<br />
+            Buscar fundacion por nombre: @Html.TextBox("nombre") <br />
+            <input type="submit" value="Buscar" />
+        </text>
     }
 </p>
 <table class="table">
@@ -28,10 +29,10 @@
     </tr>
 
     @foreach (var item in Model.Fundaciones)
-{
+    {
         string seleccionada = "";
 
-        if(item.ID == ViewBag.FundacionID)
+        if (item.ID == ViewBag.FundacionID)
         {
             seleccionada = "success";
         }
@@ -55,21 +56,23 @@
                 @Html.DisplayFor(modelItem => item.Correo)
             </td>
             <td>
-                @Html.ActionLink("Select", "Index", new { id=item.ID }) |
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+                @Html.ActionLink("Select", "Index", new { id = item.ID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
             </td>
         </tr>
-}
+    }
 
 </table>
 
-@if(Model.Mascotas != null)
-    {
+@if (Model.Mascotas != null)
+{
     <h3>Mascotas de la fundación seleccionada</h3>
+
     <table class="table">
         <tr>
+            <th></th>
             <th>Nombre</th>
             <th>Raza</th>
             <th>Color</th>
@@ -83,14 +86,16 @@
 
 
         @foreach (var item in Model.Mascotas)
-            {
-            string seleccionada1= "";
-            if(item.ID == ViewBag.MascotaID)
+        {
+            string seleccionada1 = "";
+            if (item.ID == ViewBag.MascotaID)
             {
                 seleccionada1 = "success";
             }
 
             <tr class="@seleccionada1">
+
+                <th>@item.ID</th>
                 <td>@item.Nombre</td>
                 <td>@item.Raza</td>
                 <td>@item.Color</td>
@@ -105,19 +110,19 @@
                 </td>
 
             </tr>
-           }
+        }
 
     </table>
-    }
+}
 
-@if(Model.Fotos != null)
+@if (Model.Fotos != null)
 {
     <h3>Fotos de la mascota seleccionada</h3>
     <table class="table">
         <tr>
             <th>Url</th>
         </tr>
-        @foreach(var item in Model.Fotos)
+        @foreach (var item in Model.Fotos)
         {
             <tr>
                 <td>

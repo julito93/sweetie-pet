@@ -16,11 +16,10 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -210,6 +209,42 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\10\10 %281%29.png" />
+    <Content Include="img\1\1 %281%29.png" />
+    <Content Include="img\1\1 %282%29.png" />
+    <Content Include="img\1\1 %283%29.png" />
+    <Content Include="img\2\2 %281%29.png" />
+    <Content Include="img\2\2 %282%29.png" />
+    <Content Include="img\2\2 %283%29.png" />
+    <Content Include="img\3\3 %281%29.png" />
+    <Content Include="img\3\3 %282%29.png" />
+    <Content Include="img\3\3 %283%29.png" />
+    <Content Include="img\3\3 %284%29.png" />
+    <Content Include="img\3\3 %285%29.png" />
+    <Content Include="img\4\4 %281%29.png" />
+    <Content Include="img\4\4 %282%29.png" />
+    <Content Include="img\4\4 %283%29.png" />
+    <Content Include="img\4\4 %284%29.png" />
+    <Content Include="img\4\4 %285%29.png" />
+    <Content Include="img\4\4 %286%29.png" />
+    <Content Include="img\5\5 %281%29.png" />
+    <Content Include="img\5\5 %282%29.png" />
+    <Content Include="img\5\5 %283%29.png" />
+    <Content Include="img\5\5 %284%29.png" />
+    <Content Include="img\5\5 %285%29.png" />
+    <Content Include="img\5\5 %286%29.png" />
+    <Content Include="img\6\6 %281%29.png" />
+    <Content Include="img\6\6 %282%29.png" />
+    <Content Include="img\6\6 %283%29.png" />
+    <Content Include="img\6\6 %284%29.png" />
+    <Content Include="img\6\6 %285%29.png" />
+    <Content Include="img\7\7 %281%29.png" />
+    <Content Include="img\7\7 %282%29.png" />
+    <Content Include="img\7\7 %283%29.png" />
+    <Content Include="img\8\8 %281%29.png" />
+    <Content Include="img\8\8 %282%29.png" />
+    <Content Include="img\9\9 %281%29.png" />
+    <Content Include="img\9\9 %282%29.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
