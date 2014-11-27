@@ -160,8 +160,46 @@ namespace AdopcionMascotas.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(fundación).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+
+                var usuario = new ApplicationUser { UserName = fundación.Correo, Email = fundación.Correo };
+                var us = UserManager.FindByName(usuario.Email);
+                bool ok = false;
+                string er = "";
+                if( us == null )
+                {
+                    var adminresult = UserManager.Create(usuario, fundación.Contraseña);
+                    ok = adminresult.Succeeded;
+                    if(!ok)
+                    {
+                        er = adminresult.Errors.First();
+                    }                        
+                }
+                
+                if (ok)
+                {
+                    var result = UserManager.AddToRole(usuario.Id, "Fundacion");
+                    if (result.Succeeded)
+                    {
+                        fundación.usuario = usuario;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("no se le pudo asociar un rol al usuario", er);
+                        return View(fundación);
+                    }
+                }
+                else if(us!=null)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("error", er);
+                    return View(fundación);
+                }
             }
             return View(fundación);
         }
