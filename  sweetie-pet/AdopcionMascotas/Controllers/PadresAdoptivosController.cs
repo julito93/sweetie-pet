@@ -53,9 +53,11 @@ namespace AdopcionMascotas.Controllers
         }
 
         // GET: PadresAdoptivos
+        [Authorize(Roles = "Fundacion")]
         public ActionResult Index()
         {
-            var padresAdoptivos = db.PadreAdoptivoes.ToList();
+            var user = manager.FindById(User.Identity.GetUserId());
+            var padresAdoptivos = db.SolicitudAdopcions.Where(s => s.Mascota.Fundación.Correo.Equals(user.Email)).Select(s=>s.PadreAdoptivo).ToList();
             return View(padresAdoptivos);
         }
 
@@ -100,7 +102,7 @@ namespace AdopcionMascotas.Controllers
                     Fecha_Adop = fecha
                 };
                 var mas = db.Mascotas.Where(m => m.ID == MascotaID).Single();
-                s.Mascotas.Add(mas);
+                s.Mascota = mas;
                 db.SolicitudAdopcions.Add(s);
                 db.SaveChanges();
                 return RedirectToAction("Index", "SolicitudesAdopciones");
@@ -133,7 +135,7 @@ namespace AdopcionMascotas.Controllers
                     Fecha_Adop = fecha
                 };
                 var mas = db.Mascotas.Where(m => m.ID == MascotaID).Single();
-                s.Mascotas.Add(mas);
+                s.Mascota=mas;
                 db.SolicitudAdopcions.Add(s);
                 db.SaveChanges();
 

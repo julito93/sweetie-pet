@@ -43,7 +43,7 @@ namespace AdopcionMascotas.Controllers
             IEnumerable<Mascota> mascotas = new List<Mascota>();
             if (roles.Contains("Padre Adoptivo"))
             {
-                mascotas.Union(db.Mascotas.Where(m => m.Adopcion.PadreAdoptivo.usuario.Id.Equals(usuario.Id)));
+                mascotas.Union(db.SolicitudAdopcions.Where(s => s.PadreAdoptivo.usuario.Id.Equals(usuario.Id)).Select(s=>s.Mascota));
             }
             else if (roles.Contains("Fundacion"))
             {

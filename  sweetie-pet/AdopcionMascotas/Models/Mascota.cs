@@ -18,7 +18,7 @@ namespace AdopcionMascotas.Models
         public string Tipo { get; set; }
 
         public virtual Fundación Fundación {get; set;}
-        public virtual SolicitudAdopcion Adopcion { get; set; }
+        public virtual ICollection<SolicitudAdopcion> SolicitudesAdopcion { get; set; }
         public virtual ICollection<Foto> Fotos { get; set; }
 
         public Mascota ()
