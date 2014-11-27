@@ -20,6 +20,14 @@ namespace AdopcionMascotas.Models
         public virtual PadreAdoptivo PadreAdoptivo {get; set;}
        
         public virtual Mascota Mascota { get; set; }
+
+        public string NombreMascota
+        {
+            get
+            {
+                return Mascota.Nombre;
+            }
+        }
         
     }
 }

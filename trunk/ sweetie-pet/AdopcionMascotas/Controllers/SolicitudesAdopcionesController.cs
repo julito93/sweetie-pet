@@ -32,10 +32,19 @@ namespace AdopcionMascotas.Controllers
         }
 
         // GET: SolicitudesAdopciones
-        public ActionResult Index()
+        public ActionResult Index(Int32? id)
         {
-            var usuario = UserManager.FindById(User.Identity.GetUserId());
-            return View(db.SolicitudAdopcions.Where(s=>s.PadreAdoptivo.usuario.Email.Equals(usuario.Email)).ToList());
+            SolicitudFotos modelo = new SolicitudFotos();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            modelo.Solicitudes = db.SolicitudAdopcions.Where(s => s.PadreAdoptivo.usuario.Email.Equals(user.Email)).Include(s=>s.Mascota);
+
+            if (id != null)
+            {
+                ViewBag.SolicitudID = id;
+                modelo.Fotos = db.Fotoes.Where(f=>f.Mascota.SolicitudesAdopcion.Where(s=>s.ID == id).Count()>0);
+            }
+
+            return View(modelo);
         }
 
         // GET: SolicitudesAdopciones/Details/5
