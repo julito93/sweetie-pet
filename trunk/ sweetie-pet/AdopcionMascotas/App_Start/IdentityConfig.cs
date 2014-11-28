@@ -157,7 +157,7 @@ namespace IdentitySample.Models
 
             //Create Role Padre Adoptivo if it does not exist
             rolesSweetieName = "Padre Adoptivo";
-            rolesSweetieDescription = "Persona que ha adopdato alguna mascota de una fundación de SweetiePet";
+            rolesSweetieDescription = "Padres adoptivos";
 
 
 

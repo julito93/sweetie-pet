@@ -55,15 +55,16 @@ namespace IdentitySample
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "322073561330614",
+               appSecret: "ecbb92f6369d8c63382d7bdacd640a98");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "402529435899-779a8uhotm229skhna5de86ip8dskhos.apps.googleusercontent.com",
                 ClientSecret = "f2OCG6_sw9gYmDHiExH1WD3n"
             });
+
         }
     }
 }
