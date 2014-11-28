@@ -384,6 +384,17 @@ namespace IdentitySample.Controllers
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
+
+
+                var roleName = "Usuario";
+                var role = RoleManager.FindByName(roleName);
+                result = UserManager.AddToRole(user.Id, role.Name);
+
+
+
+
+
+                
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
