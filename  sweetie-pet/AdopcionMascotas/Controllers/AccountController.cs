@@ -391,9 +391,6 @@ namespace IdentitySample.Controllers
                 result = UserManager.AddToRole(user.Id, role.Name);
 
 
-
-
-
                 
                 if (result.Succeeded)
                 {
