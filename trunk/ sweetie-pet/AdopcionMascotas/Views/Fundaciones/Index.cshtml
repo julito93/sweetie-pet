@@ -57,10 +57,10 @@
                 @Html.DisplayFor(modelItem => item.Correo)
             </td>
             <td>
-                @Html.ActionLink("Select", "Index", new { id = item.ID }) |
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Ver Mascotas", "Index", new { id = item.ID }) |
+                @Html.ActionLink("Editar", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.ID })
             </td>
         </tr>
     }
@@ -69,7 +69,7 @@
 
 @if (Model.Mascotas != null)
 {
-    <h3>Mascotas de la fundación seleccionada</h3>
+    <h3>Mascotas de la fundación</h3>
 
     <table class="table">
         <tr>
@@ -113,7 +113,7 @@
                 <td>@item.Historia</td>
 
                 <td>
-                    @Html.ActionLink("Select", "Index", new { MascotaID = item.ID })
+                    @Html.ActionLink("Ver fotos", "Index", new { MascotaID = item.ID })
                 </td>
                 <td>
                     @Html.ActionLink("Adoptar", "Create", "PadresAdoptivos", new { MascotaID = item.ID }, null)
@@ -129,9 +129,7 @@
 {
     <h3>Fotos de la mascota seleccionada</h3>
     <body>
-
-        <p>Fotos</p>
-        <div class="container">
+          <div class="container">
             <div class="row">
 
                 @foreach (var item in Model.Fotos)

@@ -8,7 +8,7 @@
 <h2>Mis padres adoptivos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crea un nuevo padre adoptivo", "Create")
 </p>
 <table class="table">
     <tr>
@@ -48,11 +48,11 @@
             @Html.DisplayFor(modelItem => item.Telefono)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Editar", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.ID }) |
             @if (User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.ID })
             }
         </td>
     </tr>

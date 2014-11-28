@@ -1,14 +1,11 @@
 ﻿@model AdopcionMascotas.Models.SolicitudFotos
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Mis solicitudes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Mis solicitudes</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -42,8 +39,8 @@
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                @Html.ActionLink("Select", "Index", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Ver Fotos", "Index", new { id = item.ID }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.ID })
             </td>
         </tr>
     }
