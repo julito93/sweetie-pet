@@ -57,7 +57,7 @@ namespace AdopcionMascotas.Controllers
         public ActionResult Index()
         {
             var user = manager.FindById(User.Identity.GetUserId());
-            var padresAdoptivos = db.SolicitudAdopcions.Where(s => s.Mascota.Fundación.Correo.Equals(user.Email)).Select(s=>s.PadreAdoptivo).ToList();
+            var padresAdoptivos = db.SolicitudAdopcions.Where(s => s.Mascota.Fundación.Correo.Equals(user.Email)).Select(s=>s.PadreAdoptivo).Distinct();
             return View(padresAdoptivos);
         }
 
