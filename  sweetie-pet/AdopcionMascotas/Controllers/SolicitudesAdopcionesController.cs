@@ -41,7 +41,7 @@ namespace AdopcionMascotas.Controllers
                 db.Entry(solicitud);
 
                 var user = UserManager.FindById(User.Identity.GetUserId());
-                var solicitudes = db.SolicitudAdopcions.Where(s => s.Mascota.Fundación.Correo.Equals(user.Email) && s.ID != solicitud.ID);
+                var solicitudes = db.SolicitudAdopcions.Where(s => s.Mascota.ID == solicitud.MascotaID && s.Mascota.Fundación.Correo.Equals(user.Email) && s.ID != solicitud.ID);
 
                 foreach (SolicitudAdopcion s in solicitudes)
                 {
