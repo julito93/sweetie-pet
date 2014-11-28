@@ -1,17 +1,18 @@
 ﻿@model PagedList.IPagedList<AdopcionMascotas.Models.Mascota>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Mis mascotas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Mis mascotas</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
+        <th></th>
         <th>
             @Html.ActionLink("Nombre", "Index", new { ordena = ViewBag.Nombre })
         </th>
@@ -42,6 +43,7 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td><</td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
