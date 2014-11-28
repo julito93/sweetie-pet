@@ -249,7 +249,7 @@
     <Content Include="img\8\8 %282%29.png" />
     <Content Include="img\9\9 %281%29.png" />
     <Content Include="img\9\9 %282%29.png" />
-    <Content Include="img\Tulips.jpg" />
+    <Content Include="img\ccc.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -374,7 +374,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54254</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:54254/</IISUrl>
+          <IISUrl>https://localhost:44300/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>https://localhost:44300/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
