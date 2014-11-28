@@ -21,11 +21,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    
-                    @if (Request.IsAuthenticated && User.IsInRole("Usuario"))
-                    {
-                        <li>@Html.ActionLink("Fundaciones", "Index", "Fundaciones")</li>
-                    }
+                    <li>@Html.ActionLink("Fundaciones", "Index", "Fundaciones")</li>
                     @if(Request.IsAuthenticated && User.IsInRole("Fundacion") ){
                     <li>@Html.ActionLink("Mis Mascotas", "Index", "Mascotas")</li>
                     <li>@Html.ActionLink("Mis Padres Adoptivos", "Index", "PadresAdoptivos")</li>
@@ -38,7 +34,6 @@
                     }
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Fundaciones", "Index", "Fundaciones")</li>
                         <li>@Html.ActionLink("Mascotas", "Index", "Mascotas")</li>
                         <li>@Html.ActionLink("Solicitudes", "IndexFundacion", "SolicitudesAdopciones")</li>
                         <li>@Html.ActionLink("Padres adoptivos", "TodosLosPadresAdoptivos", "PadresAdoptivos")</li>
