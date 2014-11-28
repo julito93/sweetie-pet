@@ -59,8 +59,11 @@ namespace IdentitySample
             //   appId: "",
             //   appSecret: "");
 
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions(){ClientId= "603068783044-htclk1d5li27iicauitg6de0ocpojovm.apps.googleusercontent.com",
-                ClientSecret= "OUXLzxVN7GOMfTRlwfVgE73n"});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "402529435899-779a8uhotm229skhna5de86ip8dskhos.apps.googleusercontent.com",
+                ClientSecret = "f2OCG6_sw9gYmDHiExH1WD3n"
+            });
         }
     }
 }
