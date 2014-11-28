@@ -31,6 +31,29 @@ namespace AdopcionMascotas.Controllers
             }
         }
 
+        [Authorize(Roles = "Fundacion")]
+        public ActionResult Aprobar(Int32? SolicitudID)
+        {
+            if (SolicitudID != null)
+            {
+                SolicitudAdopcion solicitud = db.SolicitudAdopcions.Find(SolicitudID);
+                solicitud.Estado = "Aprobado";
+                db.Entry(solicitud);
+
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                var solicitudes = db.SolicitudAdopcions.Where(s => s.Mascota.Fundación.Correo.Equals(user.Email) && s.ID != solicitud.ID);
+
+                foreach (SolicitudAdopcion s in solicitudes)
+                {
+                    s.Estado = "No aprobado";
+                    db.Entry(s);
+                }
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("IndexFundacion");
+        }
+
         // GET: SolicitudesAdopciones
         [Authorize(Roles = "Padre Adoptivo")]
         public ActionResult Index(Int32? id)
@@ -51,8 +74,8 @@ namespace AdopcionMascotas.Controllers
         [Authorize(Roles = "Fundacion, Admin")]
         public ActionResult IndexFundacion()
         {
-           var user = UserManager.FindById(User.Identity.GetUserId());
-            if (!UserManager.IsInRole(user.Id,"Admin"))
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (!UserManager.IsInRole(user.Id, "Admin"))
             {
                 var solicitudes = db.SolicitudAdopcions.Where(s => s.Mascota.Fundación.Correo.Equals(user.Email));
                 return View(solicitudes.ToList());
