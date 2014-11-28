@@ -1,12 +1,43 @@
-﻿@{
+﻿@model IEnumerable<AdopcionMascotas.Models.Foto>
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET Identity</h1>
-    <p class="lead">ASP.NET Identity is the membership system for ASP.NET apps. Following are the features of ASP.NET Identity in this sample application.</p>
-    <p><a href="http://www.asp.net/identity" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+<div id="micarrusel" class="carousel slide" data-ride="carousel">
+    <!--Declara los indicadores para tres diapositivas, la primea activa-->
+    <ol class="carousel-indicators">
+        <li data-target="#micarrusel" data-slide-to="0" class="active"></li>
+        <li data-target="#micarrusel" data-slide-to="1"></li>
+        <li data-target="#micarrusel" data-slide-to="2"></li>
+    </ol>
+    <!--Declara los items para las diapositivas-->
+    <div class="carousel-inner">
+
+        <div class="item active">
+            <img class="slide1" src="~/img/ccc.jpg" />
+        </div>
+
+        @foreach(var f in Model)
+        {
+            <div class="item">
+                <img class="slide1" src="@f.Url" />
+                <!--Cption es donde se coloca el texto en un h1 y un p-->
+                <div class="carousel-caption">
+                    <h1>@f.Mascota.Nombre</h1> 
+                    <p>Ya fué felizmente adoptada</p>
+                </div>
+            </div>
+        }
+    </div>
+    <a class="left carousel-control" href="#micarrusel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#micarrusel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
 </div>
+
+
 
 <div class="row">
     <div class="col-md-4">
