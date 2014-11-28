@@ -43,7 +43,14 @@
     @foreach (var item in Model)
     {
         <tr>
-            <th><img class ="img-responsive" src = "@item.Fotos.ElementAt(0).Url"/></th>
+            @if (item.Fotos.Count > 0)
+            {
+                <th><img class="img-responsive" src="@item.Fotos.ElementAt(0).Url" /></th>
+            }   
+            else
+            {
+                <th></th>
+            }        
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
@@ -70,7 +77,7 @@
             </td>
             <td>
                 @Html.ActionLink("Editar", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Detakkes", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.ID }) |
                 @Html.ActionLink("Eliminar", "Delete", new { id = item.ID })
             </td>
         </tr>
